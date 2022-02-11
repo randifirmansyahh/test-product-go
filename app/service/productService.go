@@ -1,39 +1,31 @@
 package service
 
 import (
-	. "test-product/app/model"
-	. "test-product/app/repository"
+	p "test-product/app/model"
+	r "test-product/app/repository"
 )
 
-type Service interface {
-	FindAll() ([]Product, error)
-	FindByID(ID int) (Product, error)
-	Create(productRequest ProductRequest) (Product, error)
-	Update(ID int, productRequest ProductRequest) (Product, error)
-	Delete(ID int) (Product, error)
-}
-
 type service struct {
-	repository Repository
+	repository r.IProductRepository
 }
 
-func NewService(repository Repository) *service {
+func NewService(repository r.IProductRepository) *service {
 	return &service{repository}
 }
 
-func (s *service) FindAll() ([]Product, error) {
+func (s *service) FindAll() ([]p.Product, error) {
 	return s.repository.FindAll()
 }
 
-func (s *service) FindByID(id int) (Product, error) {
+func (s *service) FindByID(id int) (p.Product, error) {
 	return s.repository.FindByID(id)
 }
 
-func (s *service) Create(productRequest ProductRequest) (Product, error) {
+func (s *service) Create(productRequest p.ProductRequest) (p.Product, error) {
 	price, _ := productRequest.Price.Int64()
 	rating, _ := productRequest.Rating.Int64()
 	discount, _ := productRequest.Price.Int64()
-	product := Product{
+	product := p.Product{
 		Title:       productRequest.Title,
 		Price:       int(price),
 		Description: productRequest.Description,
@@ -43,7 +35,7 @@ func (s *service) Create(productRequest ProductRequest) (Product, error) {
 	return s.repository.Create(product)
 }
 
-func (s *service) Update(ID int, productRequest ProductRequest) (Product, error) {
+func (s *service) Update(ID int, productRequest p.ProductRequest) (p.Product, error) {
 	find, _ := s.repository.FindByID(ID)
 
 	price, _ := productRequest.Price.Int64()
@@ -59,7 +51,7 @@ func (s *service) Update(ID int, productRequest ProductRequest) (Product, error)
 	return s.repository.Update(find)
 }
 
-func (s *service) Delete(ID int) (Product, error) {
+func (s *service) Delete(ID int) (p.Product, error) {
 	find, _ := s.repository.FindByID(ID)
 	return s.repository.Delete(find)
 }

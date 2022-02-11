@@ -1,11 +1,10 @@
-package router
+package server
 
 import (
-	"log"
-	handler "test-product/app/handler"
+	"test-product/app/handler"
+	"test-product/app/helper"
 	pModel "test-product/app/model"
 	pRepository "test-product/app/repository"
-	gConnection "test-product/app/server"
 	pService "test-product/app/service"
 
 	"github.com/gin-gonic/gin"
@@ -15,11 +14,9 @@ import (
 
 func Execute() {
 
-	db, err := gorm.Open(mysql.Open(gConnection.GetConnectionString()), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(GetConnectionString()), &gorm.Config{})
 
-	if err != nil {
-		log.Fatal("Database connection failed")
-	}
+	helper.CekConnectionDB(err)
 
 	db.AutoMigrate(&pModel.Product{})
 
