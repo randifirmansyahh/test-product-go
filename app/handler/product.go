@@ -27,7 +27,7 @@ func (h *productHandler) RootHandler(c *gin.Context) {
 }
 
 func (h *productHandler) GetProductsHandler(c *gin.Context) {
-	products, err := h.productService.FindAll()
+	products, err := h.productService.ProductService.FindAll()
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"errors": err,
@@ -49,7 +49,7 @@ func (h *productHandler) GetProductsHandler(c *gin.Context) {
 func (h *productHandler) GetProductByIdHandler(c *gin.Context) {
 	params := c.Param("id")
 	id, _ := strconv.Atoi(params)
-	getProduct, err := h.productService.FindByID(id)
+	getProduct, err := h.productService.ProductService.FindByID(id)
 
 	if err != nil || getProduct.ID == 0 {
 		c.JSON(http.StatusOK, gin.H{
@@ -77,7 +77,7 @@ func (h *productHandler) AddProductHandler(c *gin.Context) {
 		return
 	}
 
-	product, err := h.productService.Create(productRequest)
+	product, err := h.productService.ProductService.Create(productRequest)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"errors": err,
@@ -109,7 +109,7 @@ func (h *productHandler) UpdateProductHandler(c *gin.Context) {
 
 	params := c.Param("id")
 	id, _ := strconv.Atoi(params)
-	product, err := h.productService.Update(id, productRequest)
+	product, err := h.productService.ProductService.Update(id, productRequest)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -127,7 +127,7 @@ func (h *productHandler) UpdateProductHandler(c *gin.Context) {
 func (h *productHandler) DeleteProductHandler(c *gin.Context) {
 	params := c.Param("id")
 	id, _ := strconv.Atoi(params)
-	getProduct, err := h.productService.Delete(id)
+	getProduct, err := h.productService.ProductService.Delete(id)
 
 	if err != nil || getProduct.ID == 0 {
 		c.JSON(http.StatusOK, gin.H{

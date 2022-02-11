@@ -1,11 +1,15 @@
 package server
 
 import (
+	"os"
 	"test-product/app/handler"
 	"test-product/app/helper"
-	pModel "test-product/app/model/productModel"
-	pRepository "test-product/app/repository"
-	pService "test-product/app/service"
+	"test-product/app/model/productModel"
+	"test-product/app/repository"
+	"test-product/app/repository/productRepository"
+	"test-product/app/service/productService"
+
+	"test-product/app/service"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -14,14 +18,20 @@ import (
 
 func Execute() {
 
-	db, err := gorm.Open(mysql.Open(GetConnectionString()), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(os.Getenv("DB_DATABASE_NAME")), &gorm.Config{})
 
 	helper.CekConnectionDB(err)
 
-	db.AutoMigrate(&pModel.Product{})
+	db.AutoMigrate(&productModel.Product{})
 
-	productRepository := pRepository.NewRepository(db)
-	productService := pService.NewService(productRepository)
+	productRepository := repository.Repository{
+		ProductRepository: productRepository.NewRepository(db),
+	}
+
+	productService := service.Service{
+		ProductService: productService.NewService(productRepository),
+	}
+
 	productHandler := handler.NewProductHandler(productService)
 
 	route := gin.Default()

@@ -1,4 +1,4 @@
-package service
+package productService
 
 import (
 	p "test-product/app/model/productModel"
@@ -6,19 +6,19 @@ import (
 )
 
 type service struct {
-	repository r.IProductRepository
+	repository r.Repository
 }
 
-func NewService(repository r.IProductRepository) *service {
+func NewService(repository r.Repository) *service {
 	return &service{repository}
 }
 
 func (s *service) FindAll() ([]p.Product, error) {
-	return s.repository.FindAll()
+	return s.repository.ProductRepository.FindAll()
 }
 
 func (s *service) FindByID(id int) (p.Product, error) {
-	return s.repository.FindByID(id)
+	return s.repository.ProductRepository.FindByID(id)
 }
 
 func (s *service) Create(productRequest p.ProductRequest) (p.Product, error) {
@@ -32,11 +32,11 @@ func (s *service) Create(productRequest p.ProductRequest) (p.Product, error) {
 		Rating:      int(rating),
 		Discount:    int(discount),
 	}
-	return s.repository.Create(product)
+	return s.repository.ProductRepository.Create(product)
 }
 
 func (s *service) Update(ID int, productRequest p.ProductRequest) (p.Product, error) {
-	find, _ := s.repository.FindByID(ID)
+	find, _ := s.repository.ProductRepository.FindByID(ID)
 
 	price, _ := productRequest.Price.Int64()
 	rating, _ := productRequest.Rating.Int64()
@@ -48,10 +48,10 @@ func (s *service) Update(ID int, productRequest p.ProductRequest) (p.Product, er
 	find.Rating = int(rating)
 	find.Discount = int(discount)
 
-	return s.repository.Update(find)
+	return s.repository.ProductRepository.Update(find)
 }
 
 func (s *service) Delete(ID int) (p.Product, error) {
-	find, _ := s.repository.FindByID(ID)
-	return s.repository.Delete(find)
+	find, _ := s.repository.ProductRepository.FindByID(ID)
+	return s.repository.ProductRepository.Delete(find)
 }

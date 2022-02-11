@@ -1,4 +1,4 @@
-package model
+package productModel
 
 import (
 	"encoding/json"

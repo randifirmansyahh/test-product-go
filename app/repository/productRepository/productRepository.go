@@ -1,4 +1,4 @@
-package repository
+package productRepository
 
 import (
 	p "test-product/app/model/productModel"
@@ -10,8 +10,8 @@ type repository struct {
 	db *gorm.DB
 }
 
-func NewRepository(db *gorm.DB) *repository {
-	return &repository{db}
+func NewRepository(db *gorm.DB) IProductRepository {
+	return &repository{db: db}
 }
 
 func (r *repository) FindAll() ([]p.Product, error) {

@@ -1,8 +1,8 @@
-package service
+package productService
 
 import p "test-product/app/model/productModel"
 
-type Service interface {
+type ProductService interface {
 	FindAll() ([]p.Product, error)
 	FindByID(ID int) (p.Product, error)
 	Create(productRequest p.ProductRequest) (p.Product, error)
