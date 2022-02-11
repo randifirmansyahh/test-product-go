@@ -1,7 +1,6 @@
 package server
 
 import (
-	"os"
 	"test-product/app/handler"
 	"test-product/app/helper"
 	"test-product/app/model/productModel"
@@ -18,7 +17,7 @@ import (
 
 func Execute() {
 
-	db, err := gorm.Open(mysql.Open(os.Getenv("DB_DATABASE_NAME")), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(GetConnectionString()), &gorm.Config{})
 
 	helper.CekConnectionDB(err)
 
