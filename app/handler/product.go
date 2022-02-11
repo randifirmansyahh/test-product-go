@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"test-product/product"
+
+	productModel "test-product/app/model"
+	product "test-product/app/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -33,7 +35,7 @@ func (h *productHandler) GetProductsHandler(c *gin.Context) {
 		return
 	}
 
-	var productsResponse []product.ProductResponse
+	var productsResponse []productModel.ProductResponse
 	for _, p := range products {
 		result := convertToProductResponse(p)
 		productsResponse = append(productsResponse, result)
@@ -60,7 +62,7 @@ func (h *productHandler) GetProductByIdHandler(c *gin.Context) {
 }
 
 func (h *productHandler) AddProductHandler(c *gin.Context) {
-	var productRequest product.ProductRequest
+	var productRequest productModel.ProductRequest
 	err := c.ShouldBindJSON(&productRequest)
 
 	if err != nil {
@@ -90,7 +92,7 @@ func (h *productHandler) AddProductHandler(c *gin.Context) {
 }
 
 func (h *productHandler) UpdateProductHandler(c *gin.Context) {
-	var productRequest product.ProductRequest
+	var productRequest productModel.ProductRequest
 	err := c.ShouldBindJSON(&productRequest)
 
 	if err != nil {
@@ -137,8 +139,8 @@ func (h *productHandler) DeleteProductHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": "has been deleted"})
 }
 
-func convertToProductResponse(Obj product.Product) product.ProductResponse {
-	return product.ProductResponse{
+func convertToProductResponse(Obj productModel.Product) productModel.ProductResponse {
+	return productModel.ProductResponse{
 		ID:          Obj.ID,
 		Title:       Obj.Title,
 		Price:       Obj.Price,

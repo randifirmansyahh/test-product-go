@@ -1,6 +1,10 @@
-package product
+package repository
 
-import "gorm.io/gorm"
+import (
+	. "test-product/app/model"
+
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 	FindAll() ([]Product, error)

@@ -1,4 +1,9 @@
-package product
+package service
+
+import (
+	. "test-product/app/model"
+	. "test-product/app/repository"
+)
 
 type Service interface {
 	FindAll() ([]Product, error)
