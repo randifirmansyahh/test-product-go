@@ -1,7 +1,7 @@
 package service
 
 import (
-	p "test-product/app/model"
+	p "test-product/app/model/productModel"
 	r "test-product/app/repository"
 )
 

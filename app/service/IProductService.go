@@ -1,6 +1,6 @@
 package service
 
-import p "test-product/app/model"
+import p "test-product/app/model/productModel"
 
 type Service interface {
 	FindAll() ([]p.Product, error)

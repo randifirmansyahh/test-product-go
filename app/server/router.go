@@ -3,7 +3,7 @@ package server
 import (
 	"test-product/app/handler"
 	"test-product/app/helper"
-	pModel "test-product/app/model"
+	pModel "test-product/app/model/productModel"
 	pRepository "test-product/app/repository"
 	pService "test-product/app/service"
 

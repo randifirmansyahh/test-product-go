@@ -1,6 +1,6 @@
 package repository
 
-import p "test-product/app/model"
+import p "test-product/app/model/productModel"
 
 type IProductRepository interface {
 	FindAll() ([]p.Product, error)
